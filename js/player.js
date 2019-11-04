@@ -40,18 +40,18 @@ class Player {
             this.framesIX++;
 
             // Waiting animation meme
-            if ((this.framesY > 1) && (this.framesIX > 5)) {
-                this.framesIY++;
-                this.framesIX = 0;
+            // if ((this.framesY > 1) && (this.framesIX > 5)) {
+            //     this.framesIY++;
+            //     this.framesIX = 0;
 
-                if (this.framesIX === 6) {
-                    this.framesIX = 0;
-                }
+            //     if (this.framesIX === 6) {
+            //         this.framesIX = 0;
+            //     }
 
-                if (this.framesIY === 5) {
-                    this.framesIY = 0;
-                }
-            }
+            //     if (this.framesIY === 5) {
+            //         this.framesIY = 0;
+            //     }
+            // }
             (this.framesIX > 5) && (this.framesIX = 0);
         }
     }
