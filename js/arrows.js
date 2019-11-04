@@ -5,11 +5,8 @@ class Arrow {
         this.height = 64;
 
         this.vy = 10; // Game difficulty
-
         this.arrowBoard = arrowBoard; //I need it to apply to arrows their related position X
-        
-        this.name = this.selectName();
-        
+        this.name = this.selectName(); 
         this.posX = this.selectPosX();
         this.posY = bgHeight;
 
@@ -58,4 +55,5 @@ class Arrow {
         let arrow = this.arrowBoard.filter(arr => arr.name == this.name)
         return arrow[0].posX;
     }
+
 }

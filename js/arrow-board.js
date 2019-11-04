@@ -6,7 +6,7 @@ class ArrowBoard {
         this.img.src = img;
         this.width = 64;
         this.height = 64;
-        this.posX = 0
+        this.posX = 0;
         this.posY = bgHeight/24
     }
 

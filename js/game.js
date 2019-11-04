@@ -14,7 +14,7 @@ const game = {
         RIGHT_KEY: 39
     },
 
-    score: 0,
+    arrows : [],
 
     randomInt: function (min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -29,6 +29,7 @@ const game = {
         this.canvas.height = this.height;
 
         this.start();
+        this.setListeners();
     },
 
     start: function () {
@@ -38,12 +39,11 @@ const game = {
 
             this.clear();
             this.drawAll();
-            this.setListeners();
             this.moveAll();
             this.clearArrows();
 
             // This module is also related to speed & difficulty
-            if (this.framesCounter % this.randomInt(60, 100) === 0) {
+            if (this.framesCounter % this.randomInt(100, 120) === 0) {
                 this.createArrows();
             }
 
@@ -69,11 +69,10 @@ const game = {
             this.arrowCounter++;
         });
 
-        this.arrows = []
-
         // Players
-        this.mia = new Player(this.ctx, this.width / 2 - 256, this.height, 'img/mia-idle.png', 1);
-        this.vincent = new Player(this.ctx, this.width / 2, this.height, 'img/vincent-sprite.png', 5);
+        this.mia = new Player(this.ctx, this.width / 2 - 256, this.height, 'img/mia-idle.png', 1, this.keys, this.arrowBoard);
+        this.vincent = new Player(this.ctx, this.width / 2, this.height, 'img/vincent-sprite.png', 5, this.keys, this.arrowBoard
+        );
     },
 
     clear: function () {
@@ -110,30 +109,60 @@ const game = {
     },
 
 
-    setListeners: function () {
+    setListeners: function(){
         document.addEventListener('keydown', (e) => {
             switch (e.keyCode) {
                 case this.keys.TOP_KEY:
-                    console.log("Top arrow");
-                    
-                    let arr = this.arrows.filter(arr => arr.name === "Arrow Top")
-                    console.log(arr)
-                    
+
+                    // Transform this in a function
+                    this.arrows.filter(arr => arr.name === "Arrow Top").forEach(arr => {
+                        this.distance = arr.posY - this.arrowBoard[0].posY;
+                        this.scoring(this.distance);
+                    })
+
                     break;
                 case this.keys.DOWN_KEY:
-                    console.log("Down arrow")
+
+                    this.arrows.filter(arr => arr.name === "Arrow Bottom").forEach(arr => {
+                        this.distance = arr.posY - this.arrowBoard[0].posY;
+                        this.scoring(this.distance);
+                    })
+
                     break;
                 case this.keys.LEFT_KEY:
-                    console.log("Left arrow")
+                    this.arrows.filter(arr => arr.name === "Arrow Left").forEach(arr => {
+                        this.distance = arr.posY - this.arrowBoard[0].posY;
+                        this.scoring(this.distance);
+                    })
                     break;
                 case this.keys.RIGHT_KEY:
-                    console.log("Right arrow")
+                    this.arrows.filter(arr => arr.name === "Arrow Right").forEach(arr => {
+                        this.distance = arr.posY - this.arrowBoard[0].posY;
+                        this.scoring(this.distance);
+                    })
                     break;
-            }
+            }        
         })
-    }
+    },
+    
+    scoring: function(distance) {
+        let arrowHeight = this.arrowBoard[0].height
 
-
+        switch (true) {
+            case (distance < arrowHeight * 0.1):
+                console.log("Perfect!!");
+                break;
+            case (distance < arrowHeight * 0.25):
+                console.log("Perfect!!");
+                break;
+            case ((distance > arrowHeight * 0.25) && (distance < arrowHeight * 0.5)):
+                console.log("Good enough");
+                break;
+            case (distance > arrowHeight * 0.5):
+                console.log("Not even close!!");
+                break;
+        }
+    } ,
     // to be reviewed
     // resize: function () {
     //     this.clear();
@@ -142,7 +171,4 @@ const game = {
     //     this.background.height = game.height;
     //     this.background.width = game.background.height * 16 / 9
     // }
-
-
-    
 }

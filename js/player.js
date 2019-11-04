@@ -1,5 +1,5 @@
 class Player {
-    constructor(ctx, posX, gameHeight, img, framesY) {
+    constructor(ctx, posX, gameHeight, img, framesY, arrowBoard) {
         this.ctx = ctx;
         this.posX = posX;
         this.posY = gameHeight - 256 - 100;
@@ -16,7 +16,6 @@ class Player {
         // Actual position in the sprite
         this.framesIX = 0;
         this.framesIY = 0;
-
     }
 
     draw(framesCounter) {
@@ -58,4 +57,5 @@ class Player {
     }
 
     dance() { }
+
 }
