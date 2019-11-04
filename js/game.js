@@ -7,7 +7,15 @@ const game = {
     framesCounter: 0,
     arrowCounter: 0, //Number of el in arr arrowboard
 
-  
+    keys: {
+        TOP_KEY: 38,
+        DOWN_KEY: 40,
+        LEFT_KEY: 37,
+        RIGHT_KEY: 39
+    },
+
+    score: 0,
+
     randomInt: function (min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     },
@@ -30,6 +38,7 @@ const game = {
 
             this.clear();
             this.drawAll();
+            this.setListeners();
             this.moveAll();
             this.clearArrows();
 
@@ -45,8 +54,6 @@ const game = {
     // order matters
     reset: function () {
         this.background = new Background(this.ctx, this.width, this.height);
-        this.mia = new Player(this.ctx, this.width / 2 - 256, this.height, 'img/mia-idle.png', 1);
-        this.vincent = new Player(this.ctx, this.width / 2, this.height, 'img/vincent-sprite.png', 5);
 
         // arrow board
         // can i do it all with just an array fill with undefines and then mapping?
@@ -63,6 +70,10 @@ const game = {
         });
 
         this.arrows = []
+
+        // Players
+        this.mia = new Player(this.ctx, this.width / 2 - 256, this.height, 'img/mia-idle.png', 1);
+        this.vincent = new Player(this.ctx, this.width / 2, this.height, 'img/vincent-sprite.png', 5);
     },
 
     clear: function () {
@@ -96,7 +107,32 @@ const game = {
 
     clearArrows: function () {
         this.arrows = this.arrows.filter(arrow => (arrow.posY > -arrow.height))
+    },
+
+
+    setListeners: function () {
+        document.addEventListener('keydown', (e) => {
+            switch (e.keyCode) {
+                case this.keys.TOP_KEY:
+                    console.log("Top arrow");
+                    
+                    let arr = this.arrows.filter(arr => arr.name === "Arrow Top")
+                    console.log(arr)
+                    
+                    break;
+                case this.keys.DOWN_KEY:
+                    console.log("Down arrow")
+                    break;
+                case this.keys.LEFT_KEY:
+                    console.log("Left arrow")
+                    break;
+                case this.keys.RIGHT_KEY:
+                    console.log("Right arrow")
+                    break;
+            }
+        })
     }
+
 
     // to be reviewed
     // resize: function () {
@@ -106,4 +142,7 @@ const game = {
     //     this.background.height = game.height;
     //     this.background.width = game.background.height * 16 / 9
     // }
+
+
+    
 }

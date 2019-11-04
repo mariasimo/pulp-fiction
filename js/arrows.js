@@ -4,15 +4,14 @@ class Arrow {
         this.width = 64;
         this.height = 64;
 
-        // Map arrows array and the position from the correspondent
-        // arrow in the arrow board
-        this.posY = bgHeight;
-
         this.vy = 10; // Game difficulty
 
-        this.arrowBoard = arrowBoard;
+        this.arrowBoard = arrowBoard; //I need it to apply to arrows their related position X
+        
         this.name = this.selectName();
+        
         this.posX = this.selectPosX();
+        this.posY = bgHeight;
 
         this.img = new Image();
         this.img.src = this.selectImg();
@@ -60,18 +59,3 @@ class Arrow {
         return arrow[0].posX;
     }
 }
-
-
-
-
-
-// class ArrowLeft extends Arrow {
-//     constructor(ctx, bgHeight, arrowBoard) {
-//         super(ctx, bgHeight);
-//         this.img.src = "img/fill-arrow-left.png"
-//         this.name = "Arrow Left";
-
-//         let arrowLeft = arrowBoard.filter(arr => arr.name == "Arrow Left")
-//         this.posX = arrowLeft[0].posX;
-//     }
-// }
