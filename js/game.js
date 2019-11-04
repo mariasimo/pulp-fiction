@@ -6,6 +6,7 @@ const game = {
     fps: 60,
     framesCounter: 0,
     arrowCounter: 0, //Number of el in arr arrowboard
+    score: 0,
 
     keys: {
         TOP_KEY: 38,
@@ -27,7 +28,6 @@ const game = {
         this.height = window.innerHeight;
         this.canvas.width = this.width;
         this.canvas.height = this.height;
-
         this.start();
         this.setListeners();
     },
@@ -73,6 +73,9 @@ const game = {
         this.mia = new Player(this.ctx, this.width / 2 - 256, this.height, 'img/mia-idle.png', 1, this.keys, this.arrowBoard);
         this.vincent = new Player(this.ctx, this.width / 2, this.height, 'img/vincent-sprite.png', 5, this.keys, this.arrowBoard
         );
+
+        scoreBoard.init(this.ctx, this.score, this.background.width, this.background.height)
+
     },
 
     clear: function () {
@@ -90,6 +93,8 @@ const game = {
         this.arrows.forEach(arrow => {
             arrow.draw()
         });
+
+        scoreBoard.draw(this.score);
     },
 
     moveAll: function () {
