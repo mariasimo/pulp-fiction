@@ -2,9 +2,9 @@ class Player {
     constructor(ctx, posX, gameHeight, img, framesY, arrowBoard) {
         this.ctx = ctx;
         this.posX = posX;
-        this.posY = gameHeight - 256 - 100;
-        this.width = 256;
-        this.height = 256;
+        this.posY = gameHeight - gameHeight*0.6;
+        this.width = gameHeight*0.5;
+        this.height = gameHeight*0.5;
 
         this.img = new Image();
         this.img.src = img;

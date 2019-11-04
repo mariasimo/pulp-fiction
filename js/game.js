@@ -43,7 +43,7 @@ const game = {
             this.clearArrows();
 
             // This module is also related to speed & difficulty
-            if (this.framesCounter % this.randomInt(100, 120) === 0) {
+            if (this.framesCounter % this.randomInt(40, 100) === 0) {
                 this.createArrows();
             }
 
@@ -64,17 +64,18 @@ const game = {
             new ArrowBoard(this.ctx, 'Arrow Left', 'img/arrow-left.png', this.background.height),
         ];
 
+        // Position arrows
         this.arrowBoard.map(arrow => {
-            arrow.posX = (this.background.width - (arrow.width + 16) * this.arrowCounter) - arrow.posY;
+            arrow.posX = this.background.width + (this.width - this.background.width) / 2 - (arrow.width + 16) * this.arrowCounter - arrow.width*2;
             this.arrowCounter++;
         });
 
         // Players
-        this.mia = new Player(this.ctx, this.width / 2 - 256, this.height, 'img/mia-idle.png', 1, this.keys, this.arrowBoard);
-        this.vincent = new Player(this.ctx, this.width / 2, this.height, 'img/vincent-sprite.png', 5, this.keys, this.arrowBoard
+        this.mia = new Player(this.ctx, this.width / 2 - this.width*0.2, this.height, 'img/mia-idle.png', 1, this.keys, this.arrowBoard);
+        this.vincent = new Player(this.ctx, (this.width / 2 - this.width*0.05), this.height, 'img/vincent-sprite.png', 5, this.keys, this.arrowBoard
         );
 
-        scoreBoard.init(this.ctx, this.score, this.background.width, this.background.height)
+        scoreBoard.init(this.ctx, this.score, this.width, this.background.width, this.background.height)
 
     },
 
@@ -122,7 +123,7 @@ const game = {
                     // Transform this in a function
                     this.arrows.filter(arr => arr.name === "Arrow Top").forEach(arr => {
                         this.distance = arr.posY - this.arrowBoard[0].posY;
-                        this.scoring(this.distance);
+                        console.log(this.scoring(this.distance));
                     })
 
                     break;
@@ -130,20 +131,20 @@ const game = {
 
                     this.arrows.filter(arr => arr.name === "Arrow Bottom").forEach(arr => {
                         this.distance = arr.posY - this.arrowBoard[0].posY;
-                        this.scoring(this.distance);
+                        console.log(this.scoring(this.distance));
                     })
 
                     break;
                 case this.keys.LEFT_KEY:
                     this.arrows.filter(arr => arr.name === "Arrow Left").forEach(arr => {
                         this.distance = arr.posY - this.arrowBoard[0].posY;
-                        this.scoring(this.distance);
+                        console.log(this.scoring(this.distance));
                     })
                     break;
                 case this.keys.RIGHT_KEY:
                     this.arrows.filter(arr => arr.name === "Arrow Right").forEach(arr => {
                         this.distance = arr.posY - this.arrowBoard[0].posY;
-                        this.scoring(this.distance);
+                        console.log(this.scoring(this.distance));
                     })
                     break;
             }        
