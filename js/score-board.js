@@ -21,6 +21,12 @@ const scoreBoard = {
         this.ctx.font = '1em "Press Start 2P"'
         this.ctx.fillText("VINCENT", this.posX, this.posY)
 
+        this.ctx.fillStyle = "#e4ddd3";
+        this.ctx.font = '1em "Press Start 2P"'
+        let level = "LEVEL 0";
+        let levelWidth =  this.ctx.measureText(level).width;
+        this.ctx.fillText("LEVEL 0", this.posX+this.width - levelWidth, this.posY)
+
         this.ctx.lineWidth = this.height*0.2;
         this.ctx.strokeStyle = "#e4ddd3";
         this.ctx.strokeRect(this.posX, this.posY + this.height/2, this.width, this.height)
