@@ -3,6 +3,9 @@ class Background {
         this.ctx = ctx;
         this.width = height*16/9;
         this.height = height;
+
+        // this.width = height*16/9;
+        // this.height = 600;
         this.image  = new Image();
         this.image.src = 'img/bg.png';
 

@@ -5,7 +5,12 @@ const game = {
     height: undefined,
     fps: 60,
     framesCounter: 0,
-    arrowCounter: 0,
+    arrowCounter: 0, //Number of el in arr arrowboard
+
+  
+    randomInt: function (min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    },
 
     init: function () {
         this.canvas = document.querySelector('#game-canvas');
@@ -28,10 +33,10 @@ const game = {
             this.moveAll();
             this.clearArrows();
 
-            // console.log(this.arrows.map(a => a.name));
-
             // This module is also related to speed & difficulty
-            if (this.framesCounter % 100 === 0) this.createArrows();
+            if (this.framesCounter % this.randomInt(60, 100) === 0) {
+                this.createArrows();
+            }
 
             if (this.framesCounter > 1000) this.framesCounter = 0;
         }, 1000 / this.fps)
@@ -46,13 +51,14 @@ const game = {
         // arrow board
         // can i do it all with just an array fill with undefines and then mapping?
         this.arrowBoard = [
-            new ArrowBoard(this.ctx, 'Arrow Left', 'img/arrow-left.png', this.background.height),
-            new ArrowBoard(this.ctx, 'Arrow Bottom', 'img/arrow-bottom.png', this.background.height),
-            new ArrowBoard(this.ctx, 'Arrow Top', 'img/arrow-top.png', this.background.height),
             new ArrowBoard(this.ctx, 'Arrow Right', 'img/arrow-right.png', this.background.height),
+            new ArrowBoard(this.ctx, 'Arrow Top', 'img/arrow-top.png', this.background.height),
+            new ArrowBoard(this.ctx, 'Arrow Bottom', 'img/arrow-bottom.png', this.background.height),
+            new ArrowBoard(this.ctx, 'Arrow Left', 'img/arrow-left.png', this.background.height),
         ];
+
         this.arrowBoard.map(arrow => {
-            arrow.posX = (this.background.width - (arrow.width + 16) * this.arrowCounter) + arrow.width;
+            arrow.posX = (this.background.width - (arrow.width + 16) * this.arrowCounter) - arrow.posY;
             this.arrowCounter++;
         });
 
@@ -85,11 +91,7 @@ const game = {
     },
 
     createArrows: function () {
-        this.arrows.push(new Arrow(this.ctx, 'img/fill-arrow-right.png', this.background.height))
-
-        this.arrows.filter(arrow => arrow.name = "Arrow Left").map(arrowLeft => {
-            arrowLeft.posX = this.arrowBoard[0].posX;
-        })
+        this.arrows.push(new Arrow(this.ctx, this.background.height, this.arrowBoard))
     },
 
     clearArrows: function () {

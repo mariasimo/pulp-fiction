@@ -1,18 +1,21 @@
 class Arrow {
-    constructor(ctx, img, bgHeight) {
+    constructor(ctx, bgHeight, arrowBoard) {
         this.ctx = ctx;
-        this.img = new Image();
-        this.img.src = img;
         this.width = 64;
         this.height = 64;
-        this.name = "Arrow Left"
 
         // Map arrows array and the position from the correspondent
         // arrow in the arrow board
-        this.posX = 50;
         this.posY = bgHeight;
 
         this.vy = 10; // Game difficulty
+
+        this.arrowBoard = arrowBoard;
+        this.name = this.selectName();
+        this.posX = this.selectPosX();
+
+        this.img = new Image();
+        this.img.src = this.selectImg();
     }
 
     draw() {
@@ -22,11 +25,53 @@ class Arrow {
     move() {
         this.posY -= this.vy;
     }
+
+    randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    selectName() {
+        let names = [
+            "Arrow Left", "Arrow Top", "Arrow Bottom", "Arrow Right"
+        ]
+        return names[this.randomInt(0, names.length - 1)]
+    }
+
+    selectImg() {
+        switch (this.name) {
+            case "Arrow Left":
+                return "img/fill-arrow-left.png"
+                break;
+            case "Arrow Top":
+                return "img/fill-arrow-top.png"
+                break;
+            case "Arrow Bottom":
+                return "img/fill-arrow-bottom.png"
+                break;
+            case "Arrow Right":
+                return "img/fill-arrow-right.png"
+                break;
+        }
+
+    }
+
+    selectPosX() {
+        let arrow = this.arrowBoard.filter(arr => arr.name == this.name)
+        return arrow[0].posX;
+    }
 }
 
-// class ArrowTop extends Arrow {
-//     constructor(ctx, arrowBoardX) {
-//         super(ctx, arrowBoardX);
-//         this.name = "Arrow Top"
+
+
+
+
+// class ArrowLeft extends Arrow {
+//     constructor(ctx, bgHeight, arrowBoard) {
+//         super(ctx, bgHeight);
+//         this.img.src = "img/fill-arrow-left.png"
+//         this.name = "Arrow Left";
+
+//         let arrowLeft = arrowBoard.filter(arr => arr.name == "Arrow Left")
+//         this.posX = arrowLeft[0].posX;
 //     }
 // }
