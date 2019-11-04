@@ -127,31 +127,29 @@ const game = {
                         this.distance = arr.posY - this.arrowBoard[0].posY;
                         this.scoring(this.distance);
 
-                        console.log(this.score)
+                        // trying to animate message
+                        this.ctx.fillStyle = "#e4ddd3";
+                        this.ctx.font = '1em "Press Start 2P"'
+                        this.ctx.fillText("PERFECT!", arr.posY, arr.posX)
+                        
                     })
                     break;
                 case this.keys.DOWN_KEY:
                     this.arrows.filter(arr => arr.name === "Arrow Bottom").forEach(arr => {
                         this.distance = arr.posY - this.arrowBoard[0].posY;
                         this.scoring(this.distance);
-                        console.log(this.score)
-
                     })
                     break;
                 case this.keys.LEFT_KEY:
                     this.arrows.filter(arr => arr.name === "Arrow Left").forEach(arr => {
                         this.distance = arr.posY - this.arrowBoard[0].posY;
                         this.scoring(this.distance);
-                        console.log(this.score)
-
                     })
                     break;
                 case this.keys.RIGHT_KEY:
                     this.arrows.filter(arr => arr.name === "Arrow Right").forEach(arr => {
                         this.distance = arr.posY - this.arrowBoard[0].posY;
                         this.scoring(this.distance);
-                        console.log(this.score)
-
                     })
                     break;
             }
@@ -165,12 +163,11 @@ const game = {
             case (distance < arrowHeight * 0.1):
                 console.log("Perfect!!");
                 this.score += 10;
-
                 scoreBoard.scoreWidth += this.score;
                 return this.score;
                 break;
             case (distance < arrowHeight * 0.25):
-                console.log("Perfect!!");
+                console.log("Great!!");
                 this.score += 8;
                 scoreBoard.scoreWidth += this.score;
                 return this.score;
@@ -190,14 +187,13 @@ const game = {
         }
     },
 
-    nextLevel : function(){
-
+    nextLevel: function () {
         // end of level
-        if (scoreBoard.scoreWidth >= scoreBoard.width){
+        if (scoreBoard.scoreWidth >= scoreBoard.width) {
             this.arrows = [];
             scoreBoard.scoreWidth = scoreBoard.width;
             clearInterval(this.interval);
-            alert("Holi");
+            alert("Level completed");
         }
 
         // increment difficulty
