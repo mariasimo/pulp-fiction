@@ -4,18 +4,18 @@ const scoreBoard = {
     width: undefined,
     height: undefined,
 
-    init: function (ctx, score, gameWidth, bgWidth, bgHeight) {
+    init: function (ctx, gameWidth, bgWidth, bgHeight) {
         this.ctx = ctx;
-        this.score = score;
         this.width = bgWidth/4;
         this.height = bgHeight/32;
         this.posX = (gameWidth - bgWidth)/2 + bgWidth/32;
         this.posY = bgHeight / 16;
+        this.scoreWidth = this.width/2
     },
 
-    draw: function () {
+    draw: function (score) {
         this.ctx.fillStyle = "#ff553f";
-        this.ctx.fillRect(this.posX, this.posY + this.height/2, this.width/2, this.height)
+        this.ctx.fillRect(this.posX, this.posY + this.height/2, this.scoreWidth, this.height)
 
         this.ctx.fillStyle = "#e4ddd3";
         this.ctx.font = '1em "Press Start 2P"'
@@ -24,6 +24,6 @@ const scoreBoard = {
         this.ctx.lineWidth = this.height*0.2;
         this.ctx.strokeStyle = "#e4ddd3";
         this.ctx.strokeRect(this.posX, this.posY + this.height/2, this.width, this.height)
-
     }
+    
 }

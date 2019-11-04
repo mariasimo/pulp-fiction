@@ -15,7 +15,7 @@ const game = {
         RIGHT_KEY: 39
     },
 
-    arrows : [],
+    arrows: [],
 
     randomInt: function (min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -29,7 +29,7 @@ const game = {
         this.canvas.width = this.width;
         this.canvas.height = this.height;
         this.start();
-        this.setListeners();
+        this.setListeners(this.scoreBoard);
     },
 
     start: function () {
@@ -38,6 +38,8 @@ const game = {
             this.framesCounter++;
 
             this.clear();
+            this.nextLevel();
+
             this.drawAll();
             this.moveAll();
             this.clearArrows();
@@ -66,16 +68,16 @@ const game = {
 
         // Position arrows
         this.arrowBoard.map(arrow => {
-            arrow.posX = this.background.width + (this.width - this.background.width) / 2 - (arrow.width + 16) * this.arrowCounter - arrow.width*2;
+            arrow.posX = this.background.width + (this.width - this.background.width) / 2 - (arrow.width + 16) * this.arrowCounter - arrow.width * 2;
             this.arrowCounter++;
         });
 
         // Players
-        this.mia = new Player(this.ctx, this.width / 2 - this.width*0.2, this.height, 'img/mia-idle.png', 1, this.keys, this.arrowBoard);
-        this.vincent = new Player(this.ctx, (this.width / 2 - this.width*0.05), this.height, 'img/vincent-sprite.png', 5, this.keys, this.arrowBoard
+        this.mia = new Player(this.ctx, this.width / 2 - this.width * 0.2, this.height, 'img/mia-idle.png', 1, this.keys, this.arrowBoard);
+        this.vincent = new Player(this.ctx, (this.width / 2 - this.width * 0.05), this.height, 'img/vincent-sprite.png', 5, this.keys, this.arrowBoard
         );
 
-        scoreBoard.init(this.ctx, this.score, this.width, this.background.width, this.background.height)
+        scoreBoard.init(this.ctx, this.width, this.background.width, this.background.height)
 
     },
 
@@ -115,7 +117,7 @@ const game = {
     },
 
 
-    setListeners: function(){
+    setListeners: function () {
         document.addEventListener('keydown', (e) => {
             switch (e.keyCode) {
                 case this.keys.TOP_KEY:
@@ -123,52 +125,86 @@ const game = {
                     // Transform this in a function
                     this.arrows.filter(arr => arr.name === "Arrow Top").forEach(arr => {
                         this.distance = arr.posY - this.arrowBoard[0].posY;
-                        console.log(this.scoring(this.distance));
-                    })
+                        this.scoring(this.distance);
 
+                        console.log(this.score)
+                    })
                     break;
                 case this.keys.DOWN_KEY:
-
                     this.arrows.filter(arr => arr.name === "Arrow Bottom").forEach(arr => {
                         this.distance = arr.posY - this.arrowBoard[0].posY;
-                        console.log(this.scoring(this.distance));
-                    })
+                        this.scoring(this.distance);
+                        console.log(this.score)
 
+                    })
                     break;
                 case this.keys.LEFT_KEY:
                     this.arrows.filter(arr => arr.name === "Arrow Left").forEach(arr => {
                         this.distance = arr.posY - this.arrowBoard[0].posY;
-                        console.log(this.scoring(this.distance));
+                        this.scoring(this.distance);
+                        console.log(this.score)
+
                     })
                     break;
                 case this.keys.RIGHT_KEY:
                     this.arrows.filter(arr => arr.name === "Arrow Right").forEach(arr => {
                         this.distance = arr.posY - this.arrowBoard[0].posY;
-                        console.log(this.scoring(this.distance));
+                        this.scoring(this.distance);
+                        console.log(this.score)
+
                     })
                     break;
-            }        
+            }
         })
     },
-    
-    scoring: function(distance) {
+
+    scoring: function (distance) {
         let arrowHeight = this.arrowBoard[0].height
 
         switch (true) {
             case (distance < arrowHeight * 0.1):
                 console.log("Perfect!!");
+                this.score += 10;
+
+                scoreBoard.scoreWidth += this.score;
+                return this.score;
                 break;
             case (distance < arrowHeight * 0.25):
                 console.log("Perfect!!");
+                this.score += 8;
+                scoreBoard.scoreWidth += this.score;
+                return this.score;
                 break;
             case ((distance > arrowHeight * 0.25) && (distance < arrowHeight * 0.5)):
                 console.log("Good enough");
+                this.score += 3;
+                scoreBoard.scoreWidth += this.score;
+                return this.score;
                 break;
             case (distance > arrowHeight * 0.5):
                 console.log("Not even close!!");
+                this.score -= 3;
+                scoreBoard.scoreWidth += this.score;
+                return this.score;
                 break;
         }
-    } ,
+    },
+
+    nextLevel : function(){
+
+        // end of level
+        if (scoreBoard.scoreWidth >= scoreBoard.width){
+            this.arrows = [];
+            scoreBoard.scoreWidth = scoreBoard.width;
+            clearInterval(this.interval);
+            alert("Holi");
+        }
+
+        // increment difficulty
+        // start new level
+        // this.init();
+    }
+
     // to be reviewed
     // resize: function () {
     //     this.clear();
