@@ -41,7 +41,7 @@ const game = {
             this.framesCounter++;
 
             this.clear();
-            this.nextLevel();
+            this.winOrLose();
 
             this.drawAll();
             this.moveAll();
@@ -103,7 +103,7 @@ const game = {
             arrow.draw()
         });
 
-        this.messages.forEach(message =>{
+        this.messages.forEach(message => {
             message.draw();
             message.fadeOut();
         })
@@ -136,12 +136,11 @@ const game = {
         this.messages = this.messages.filter(message => (message.alpha > 0))
     },
 
+
     setListeners: function () {
         document.addEventListener('keydown', (e) => {
             switch (e.keyCode) {
                 case this.keys.TOP_KEY:
-
-                    // Transform this in a function
                     this.arrows.filter(arr => arr.name === "Arrow Top").forEach(arr => {
                         this.distance = arr.posY - this.arrowBoard[0].posY;
                         this.scoring(this.distance);
@@ -174,55 +173,52 @@ const game = {
 
         switch (true) {
             case (distance < arrowHeight * 0.1):
-                console.log("Perfect!!");
-
-                this.score += 3;
-                scoreBoard.scoreWidth += this.score; 
-                this.textIndex = 0;   
-
-                this.createMessage();
-                return this.score;
+                this.calculateScore(5, 0);
                 break;
             case (distance < arrowHeight * 0.25):
-                console.log("Great!!");
-                this.score += 2;
-                scoreBoard.scoreWidth += this.score;
-                this.textIndex = 1;   
-
-                this.createMessage();
-                return this.score;
+                this.calculateScore(2, 1)
                 break;
             case ((distance > arrowHeight * 0.25) && (distance < arrowHeight * 0.5)):
-                console.log("Good enough");
-                this.score += 1;
-                scoreBoard.scoreWidth += this.score;
-                this.textIndex = 2;
-                this.createMessage();
-                return this.score;
+                this.calculateScore(1, 2);
                 break;
             case (distance > arrowHeight * 0.5):
-                console.log("Not even close!!");
-                this.score -= 5;
-                scoreBoard.scoreWidth += this.score;
-                this.textIndex(3);
-                this.createMessage();
-                return this.score;
+                this.calculateScore(-5, 3);
                 break;
         }
     },
 
-    nextLevel: function () {
+    calculateScore: function (number, textIndex) {
+        this.score += number;
+        scoreBoard.scoreWidth += this.score;
+        this.textIndex = textIndex;
+        this.createMessage();
+        return this.score;
+    },
+
+    winOrLose: function () {
         // end of level
         if (scoreBoard.scoreWidth >= scoreBoard.width) {
             this.arrows = [];
+            this.messages = [];
             scoreBoard.scoreWidth = scoreBoard.width;
             clearInterval(this.interval);
             alert("Level completed");
+        } else if (scoreBoard.scoreWidth <= 0) {
+            scoreBoard.scoreWidth = 0;
+            scoreBoard.draw();
+            this.gameOver()
         }
 
         // increment difficulty
         // start new level
         // this.init();
+    },
+
+    gameOver: function () {
+        this.arrows = [];
+        this.messages = [];
+        clearInterval(this.interval);
+        alert("You suck");
     }
 
     // to be reviewed
