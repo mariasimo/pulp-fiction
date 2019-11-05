@@ -13,11 +13,8 @@ const scoreBoard = {
         this.scoreWidth = this.width/2
     },
 
-    draw: function (score) {
-        if(this.scoreWidth < 0){
-            this.scoreWidth = 0;
-        }
-        
+    draw: function () {
+    
         this.ctx.fillStyle = "#ff553f";
         this.ctx.fillRect(this.posX, this.posY + this.height/2, this.scoreWidth, this.height)
 
@@ -34,6 +31,5 @@ const scoreBoard = {
         this.ctx.lineWidth = this.height*0.2;
         this.ctx.strokeStyle = "#e4ddd3";
         this.ctx.strokeRect(this.posX, this.posY + this.height/2, this.width, this.height)
-    }
-    
+    }   
 }
