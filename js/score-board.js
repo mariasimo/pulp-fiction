@@ -14,6 +14,10 @@ const scoreBoard = {
     },
 
     draw: function (score) {
+        if(this.scoreWidth < 0){
+            this.scoreWidth = 0;
+        }
+        
         this.ctx.fillStyle = "#ff553f";
         this.ctx.fillRect(this.posX, this.posY + this.height/2, this.scoreWidth, this.height)
 

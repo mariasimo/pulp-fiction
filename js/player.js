@@ -52,6 +52,8 @@ class Player {
             //         this.framesIY = 0;
             //     }
             // }
+
+            
             (this.framesIX > 5) && (this.framesIX = 0);
         }
     }

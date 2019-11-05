@@ -17,6 +17,9 @@ const game = {
 
     arrows: [],
 
+    textIndex: 0,
+
+
     randomInt: function (min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     },
@@ -43,6 +46,7 @@ const game = {
             this.drawAll();
             this.moveAll();
             this.clearArrows();
+            this.clearMessages();
 
             // This module is also related to speed & difficulty
             if (this.framesCounter % this.randomInt(40, 100) === 0) {
@@ -79,6 +83,8 @@ const game = {
 
         scoreBoard.init(this.ctx, this.width, this.background.width, this.background.height)
 
+        // Messages
+        this.messages = [];
     },
 
     clear: function () {
@@ -97,6 +103,11 @@ const game = {
             arrow.draw()
         });
 
+        this.messages.forEach(message =>{
+            message.draw();
+            message.fadeOut();
+        })
+
         scoreBoard.draw(this.score);
     },
 
@@ -105,6 +116,7 @@ const game = {
         this.arrows.forEach(arrow => {
             arrow.move()
         });
+
         //this is also, where players' dance method is called
     },
 
@@ -116,6 +128,13 @@ const game = {
         this.arrows = this.arrows.filter(arrow => (arrow.posY > -arrow.height))
     },
 
+    createMessage: function () {
+        this.messages.push(new Message(this.ctx, this.textIndex, this.arrowBoard, this.randomInt(100, 200), 100, 100));
+    },
+
+    clearMessages: function () {
+        this.messages = this.messages.filter(message => (message.alpha > 0))
+    },
 
     setListeners: function () {
         document.addEventListener('keydown', (e) => {
@@ -126,12 +145,6 @@ const game = {
                     this.arrows.filter(arr => arr.name === "Arrow Top").forEach(arr => {
                         this.distance = arr.posY - this.arrowBoard[0].posY;
                         this.scoring(this.distance);
-
-                        // trying to animate message
-                        this.ctx.fillStyle = "#e4ddd3";
-                        this.ctx.font = '1em "Press Start 2P"'
-                        this.ctx.fillText("PERFECT!", arr.posY, arr.posX)
-                        
                     })
                     break;
                 case this.keys.DOWN_KEY:
@@ -162,26 +175,37 @@ const game = {
         switch (true) {
             case (distance < arrowHeight * 0.1):
                 console.log("Perfect!!");
-                this.score += 10;
-                scoreBoard.scoreWidth += this.score;
+
+                this.score += 3;
+                scoreBoard.scoreWidth += this.score; 
+                this.textIndex = 0;   
+
+                this.createMessage();
                 return this.score;
                 break;
             case (distance < arrowHeight * 0.25):
                 console.log("Great!!");
-                this.score += 8;
+                this.score += 2;
                 scoreBoard.scoreWidth += this.score;
+                this.textIndex = 1;   
+
+                this.createMessage();
                 return this.score;
                 break;
             case ((distance > arrowHeight * 0.25) && (distance < arrowHeight * 0.5)):
                 console.log("Good enough");
-                this.score += 3;
+                this.score += 1;
                 scoreBoard.scoreWidth += this.score;
+                this.textIndex = 2;
+                this.createMessage();
                 return this.score;
                 break;
             case (distance > arrowHeight * 0.5):
                 console.log("Not even close!!");
-                this.score -= 3;
+                this.score -= 5;
                 scoreBoard.scoreWidth += this.score;
+                this.textIndex(3);
+                this.createMessage();
                 return this.score;
                 break;
         }
