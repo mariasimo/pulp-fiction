@@ -1,17 +1,17 @@
 class Player {
-    constructor(ctx, posX, gameHeight, img, framesY, arrowBoard) {
+    constructor(ctx, posX, gameHeight, img) {
         this.ctx = ctx;
         this.posX = posX;
-        this.posY = gameHeight - gameHeight*0.6;
-        this.width = gameHeight*0.5;
-        this.height = gameHeight*0.5;
+        this.posY = gameHeight - gameHeight * 0.7;
+        this.width = gameHeight * 0.6;
+        this.height = gameHeight * 0.6;
 
         this.img = new Image();
         this.img.src = img;
 
         // Num of frames in the sprite
         this.framesX = 6;
-        this.framesY = framesY;
+        this.framesY = 5;
 
         // Actual position in the sprite
         this.framesIX = 0;
@@ -31,7 +31,9 @@ class Player {
             this.height
         );
 
-        this.animate(framesCounter);
+        // this.animate(framesCounter);
+        this.dance(framesCounter)
+
     }
 
     animate(framesCounter) {
@@ -53,11 +55,37 @@ class Player {
             //     }
             // }
 
-            
+
             (this.framesIX > 5) && (this.framesIX = 0);
         }
     }
 
-    dance() { }
+    dance(framesCounter) {        
+        if (framesCounter % 20 === 0) {
+            this.framesIX++;
 
+            // Waiting animation meme
+            // (this.framesIY >= 1) && (this.framesIY = 1)
+
+            if ((this.framesY > 1) && (this.framesIX > 5)) {
+                this.framesIY++;
+                this.framesIX = 0;
+
+                if (this.framesIX === 6) {
+                    this.framesIX = 0;
+                }
+
+                if (this.framesIY === 5) {
+                    this.framesIY = 0;
+                }
+
+                if(this.framesIY <= 2){
+                    this.framesIY = 2
+                }
+            }
+
+
+            // (this.framesIX > 5) && (this.framesIX = 0);
+        }
+    }
 }

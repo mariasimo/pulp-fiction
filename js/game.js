@@ -24,11 +24,11 @@ const game = {
         return Math.floor(Math.random() * (max - min + 1) + min);
     },
 
-    init: function () {
-        this.canvas = document.querySelector('#game-canvas');
+    init: function (el) {
+        this.canvas = document.querySelector(el);
         this.ctx = this.canvas.getContext('2d');
-        this.width = window.innerWidth;
-        this.height = window.innerHeight;
+        this.width = window.innerWidth*0.75;
+        this.height = window.innerHeight*0.75;
         this.canvas.width = this.width;
         this.canvas.height = this.height;
         this.start();
@@ -59,7 +59,7 @@ const game = {
 
     // order matters
     reset: function () {
-        this.background = new Background(this.ctx, this.width, this.height);
+        this.background = new Background(this.ctx, "img/bg-1.png", this.width, this.height);
 
         // arrow board
         // can i do it all with just an array fill with undefines and then mapping?
@@ -77,9 +77,8 @@ const game = {
         });
 
         // Players
-        this.mia = new Player(this.ctx, this.width / 2 - this.width * 0.2, this.height, 'img/mia-idle.png', 1, this.keys, this.arrowBoard);
-        this.vincent = new Player(this.ctx, (this.width / 2 - this.width * 0.05), this.height, 'img/vincent-sprite.png', 5, this.keys, this.arrowBoard
-        );
+        this.mia = new Player(this.ctx, (this.width / 2 - this.width * 0.2), this.height, 'img/mia.png');
+        this.vincent = new Player(this.ctx, (this.width / 2 - this.width * 0.05), this.height, 'img/vincent-sprite.png');
 
         scoreBoard.init(this.ctx, this.width, this.background.width, this.background.height)
 
@@ -118,6 +117,9 @@ const game = {
         });
 
         //this is also, where players' dance method is called
+        // if countdown has finished
+        // if(e){
+        // }
     },
 
     createArrows: function () {
@@ -139,6 +141,7 @@ const game = {
 
     setListeners: function () {
         document.addEventListener('keydown', (e) => {
+            
             switch (e.keyCode) {
                 case this.keys.TOP_KEY:
                     this.arrows.filter(arr => arr.name === "Arrow Top").forEach(arr => {

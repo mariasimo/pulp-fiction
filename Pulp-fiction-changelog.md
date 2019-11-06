@@ -1,9 +1,9 @@
 ## Pulp fiction
 
-- [ ] Mejorar el fondo
+- [x] Mejorar el fondo
 - [ ] Crear animación fondo
 - [ ] Crear animación de entrada
-- [ ] Crear score de puntuacion
+- [x] Crear score de puntuacion
 - [ ] Crear score de flechas
 - [ ] Crear array de flechas
   - [ ] Las flechas aparecen de manera random en tiempos random

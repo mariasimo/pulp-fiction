@@ -8,7 +8,7 @@ const scoreBoard = {
         this.ctx = ctx;
         this.width = bgWidth/4;
         this.height = bgHeight/32;
-        this.posX = (gameWidth - bgWidth)/2 + bgWidth/32;
+        this.posX = (gameWidth - bgWidth)/2 + bgWidth/20;
         this.posY = bgHeight / 16;
         this.scoreWidth = this.width/2
     },

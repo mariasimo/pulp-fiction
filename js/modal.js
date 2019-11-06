@@ -1,12 +1,9 @@
-class Background {
+class Modal {
     constructor(ctx, img, width, height){
         this.ctx = ctx;
-        this.height = height;
-        this.width = this.height*16/9;
+        this.width = width/2;
+        this.height = height/2;
 
-
-        // this.width = height*16/9;
-        // this.height = 600;
         this.image  = new Image();
         this.image.src = img;
 
