@@ -3,7 +3,7 @@ const game = {
     ctx: undefined,
     width: undefined,
     height: undefined,
-    fps: 40,
+    fps: 30,
     framesCounter: 0,
     arrowCounter: 0, //Number of el in arr arrowboard
     score: 0,
@@ -14,21 +14,24 @@ const game = {
         LEFT_KEY: 37,
         RIGHT_KEY: 39
     },
-
     arrows: [],
     textIndex: 0,
+    level: 0,
+    increaseDifficulty: 0,
 
     randomInt: function (min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     },
 
     init: function () {
+
         this.canvas = document.querySelector('#game-canvas');
         this.ctx = this.canvas.getContext('2d');
-        this.width = window.innerWidth*0.75;
-        this.height = window.innerHeight*0.75;
+        this.width = window.innerWidth * 0.75 
+        this.height = window.innerHeight * 0.75;
         this.canvas.width = this.width;
         this.canvas.height = this.height;
+        this.arrowCounter = 0;
         this.start();
         this.setListeners(this.scoreBoard);
     },
@@ -79,7 +82,7 @@ const game = {
         this.mia = new Player(this.ctx, (this.width / 2 - this.width * 0.2), this.height, 'img/mia.png');
         this.vincent = new Player(this.ctx, (this.width / 2 - this.width * 0.05), this.height, 'img/vincent-sprite.png');
 
-        scoreBoard.init(this.ctx, this.width, this.background.width, this.background.height)
+        scoreBoard.init(this.ctx, this.width, this.background.width, this.background.height, this.level)
 
         // Messages
         this.messages = [];
@@ -124,7 +127,6 @@ const game = {
             this.vincent.framesIY = 0;
             this.vincent.animate(this.framesCounter);
         }
-
     },
 
     createArrows: function () {
@@ -143,10 +145,8 @@ const game = {
         this.messages = this.messages.filter(message => (message.alpha > 0))
     },
 
-
     setListeners: function () {
         document.addEventListener('keydown', (e) => {
-            
             switch (e.keyCode) {
                 case this.keys.TOP_KEY:
                     this.arrows.filter(arr => arr.name === "Arrow Top").forEach(arr => {
@@ -178,7 +178,7 @@ const game = {
 
     calculateScoreBasedOnDistance: function (distance) {
         let _calculateScore = (number, textIndex) => {
-            this.score += number;
+            this.score = number;
             scoreBoard.scoreWidth += this.score;
             this.textIndex = textIndex;
             this.createMessage();
@@ -190,11 +190,11 @@ const game = {
 
         switch (true) {
             case (distance < arrowHeight * 0.1):
-                newScore = _calculateScore(5, 0);
+                newScore = _calculateScore(6, 0);
                 return this.dance = "dance";
                 break;
             case (distance < arrowHeight * 0.25):
-                newScore = _calculateScore(2, 1);
+                newScore = _calculateScore(3, 1);
                 return this.dance = "dance";
                 break;
             case ((distance > arrowHeight * 0.25) && (distance < arrowHeight * 0.5)):
@@ -217,18 +217,25 @@ const game = {
         }
     },
 
-    newLevel: function() {
+    newLevel: function () {
+
         this.arrows = [];
         this.messages = [];
         scoreBoard.scoreWidth = 0;
         scoreBoard.draw();
         this.ctx.fillStyle = "green"
-        this.ctx.fillRect((this.width - this.background.width)/2,0, this.background.width, this.background.height)
+        this.ctx.fillRect((this.width - this.background.width) / 2, 0, this.background.width, this.background.height)
 
         clearInterval(this.interval);
 
+
+        this.level++;
+        this.fps += 5;
+        // this.increaseDifficulty += 0.8;
+
+
         setTimeout(() => {
-            game.clear();    
+            game.clear();
             game.init();
         }, 1000)
     },
@@ -240,17 +247,8 @@ const game = {
         scoreBoard.scoreWidth = 0;
         scoreBoard.draw();
         this.ctx.fillStyle = "red"
-        this.ctx.fillRect((this.width - this.background.width)/2,0, this.background.width, this.background.height)
+        this.ctx.fillRect((this.width - this.background.width) / 2, 0, this.background.width, this.background.height)
 
         clearInterval(this.interval);
     }
-
-    // to be reviewed
-    // resize: function () {
-    //     this.clear();
-    //     this.width = window.innerWidth;
-    //     this.height = window.innerHeight;
-    //     this.background.height = game.height;
-    //     this.background.width = game.background.height * 16 / 9
-    // }
 }
