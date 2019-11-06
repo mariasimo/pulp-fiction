@@ -17,7 +17,7 @@ const game = {
     arrows: [],
     textIndex: 0,
     level: 0,
-    increaseDifficulty: 0,
+    increaseDifficulty: 1,
 
     randomInt: function (min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -122,6 +122,7 @@ const game = {
 
         if (this.dance === "dance") {
             this.vincent.dance(this.framesCounter);
+
         } else {
 
             this.vincent.framesIY = 0;
@@ -178,10 +179,17 @@ const game = {
 
     calculateScoreBasedOnDistance: function (distance) {
         let _calculateScore = (number, textIndex) => {
-            this.score = number;
-            scoreBoard.scoreWidth += this.score;
+            this.score = number - this.increaseDifficulty;
+
+            if(number > 0){
+                this.score *= 2;
+            }
+
+            scoreBoard.scoreWidth += this.score 
             this.textIndex = textIndex;
             this.createMessage();
+
+            console.log(this.score);
             return this.score;
         }
 
@@ -231,7 +239,7 @@ const game = {
 
         this.level++;
         this.fps += 5;
-        // this.increaseDifficulty += 0.8;
+        this.increaseDifficulty++;
 
 
         setTimeout(() => {
