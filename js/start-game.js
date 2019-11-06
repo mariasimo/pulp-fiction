@@ -56,7 +56,7 @@ const animationOnLoad = {
 
                 setTimeout(() => {
                     if (typeof game.canvas === "undefined") {
-                        game.init('#game-canvas');
+                        game.init();
                     }
                 }, 100)
             }

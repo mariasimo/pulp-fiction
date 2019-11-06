@@ -8,7 +8,6 @@ const game = {
     arrowCounter: 0, //Number of el in arr arrowboard
     score: 0,
     dance: undefined,
-
     keys: {
         TOP_KEY: 38,
         DOWN_KEY: 40,
@@ -17,16 +16,14 @@ const game = {
     },
 
     arrows: [],
-
     textIndex: 0,
-
 
     randomInt: function (min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     },
 
-    init: function (el) {
-        this.canvas = document.querySelector(el);
+    init: function () {
+        this.canvas = document.querySelector('#game-canvas');
         this.ctx = this.canvas.getContext('2d');
         this.width = window.innerWidth*0.75;
         this.height = window.innerHeight*0.75;
@@ -229,6 +226,11 @@ const game = {
         this.ctx.fillRect((this.width - this.background.width)/2,0, this.background.width, this.background.height)
 
         clearInterval(this.interval);
+
+        setTimeout(() => {
+            game.clear();    
+            game.init();
+        }, 1000)
     },
 
 
