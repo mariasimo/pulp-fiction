@@ -32,40 +32,20 @@ class Player {
         );
 
         // this.animate(framesCounter);
-        this.dance(framesCounter)
-
+        // this.dance(framesCounter)
     }
 
     animate(framesCounter) {
 
         if (framesCounter % 10 === 0) {
             this.framesIX++;
-
-            // Waiting animation meme
-            // if ((this.framesY > 1) && (this.framesIX > 5)) {
-            //     this.framesIY++;
-            //     this.framesIX = 0;
-
-            //     if (this.framesIX === 6) {
-            //         this.framesIX = 0;
-            //     }
-
-            //     if (this.framesIY === 5) {
-            //         this.framesIY = 0;
-            //     }
-            // }
-
-
             (this.framesIX > 5) && (this.framesIX = 0);
         }
     }
 
     dance(framesCounter) {        
-        if (framesCounter % 20 === 0) {
+        if (framesCounter % 10 === 0) {
             this.framesIX++;
-
-            // Waiting animation meme
-            // (this.framesIY >= 1) && (this.framesIY = 1)
 
             if ((this.framesY > 1) && (this.framesIX > 5)) {
                 this.framesIY++;
@@ -83,9 +63,6 @@ class Player {
                     this.framesIY = 2
                 }
             }
-
-
-            // (this.framesIX > 5) && (this.framesIX = 0);
         }
     }
 }

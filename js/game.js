@@ -3,10 +3,11 @@ const game = {
     ctx: undefined,
     width: undefined,
     height: undefined,
-    fps: 60,
+    fps: 40,
     framesCounter: 0,
     arrowCounter: 0, //Number of el in arr arrowboard
     score: 0,
+    dance: undefined,
 
     keys: {
         TOP_KEY: 38,
@@ -41,8 +42,6 @@ const game = {
             this.framesCounter++;
 
             this.clear();
-            this.winOrLose();
-
             this.drawAll();
             this.moveAll();
             this.clearArrows();
@@ -54,6 +53,9 @@ const game = {
             }
 
             if (this.framesCounter > 1000) this.framesCounter = 0;
+
+            this.winOrLose();
+
         }, 1000 / this.fps)
     },
 
@@ -111,15 +113,21 @@ const game = {
     },
 
     moveAll: function () {
-        //for each arrow, call move method
         this.arrows.forEach(arrow => {
             arrow.move()
         });
 
-        //this is also, where players' dance method is called
         // if countdown has finished
-        // if(e){
-        // }
+        this.mia.dance(this.framesCounter)
+
+        if (this.dance === "dance") {
+            this.vincent.dance(this.framesCounter);
+        } else {
+
+            this.vincent.framesIY = 0;
+            this.vincent.animate(this.framesCounter);
+        }
+
     },
 
     createArrows: function () {
@@ -146,82 +154,93 @@ const game = {
                 case this.keys.TOP_KEY:
                     this.arrows.filter(arr => arr.name === "Arrow Top").forEach(arr => {
                         this.distance = arr.posY - this.arrowBoard[0].posY;
-                        this.scoring(this.distance);
+                        this.calculateScoreBasedOnDistance(this.distance);
                     })
                     break;
                 case this.keys.DOWN_KEY:
                     this.arrows.filter(arr => arr.name === "Arrow Bottom").forEach(arr => {
                         this.distance = arr.posY - this.arrowBoard[0].posY;
-                        this.scoring(this.distance);
+                        this.calculateScoreBasedOnDistance(this.distance);
                     })
                     break;
                 case this.keys.LEFT_KEY:
                     this.arrows.filter(arr => arr.name === "Arrow Left").forEach(arr => {
                         this.distance = arr.posY - this.arrowBoard[0].posY;
-                        this.scoring(this.distance);
+                        this.calculateScoreBasedOnDistance(this.distance);
                     })
                     break;
                 case this.keys.RIGHT_KEY:
                     this.arrows.filter(arr => arr.name === "Arrow Right").forEach(arr => {
                         this.distance = arr.posY - this.arrowBoard[0].posY;
-                        this.scoring(this.distance);
+                        this.calculateScoreBasedOnDistance(this.distance);
                     })
                     break;
             }
         })
     },
 
-    scoring: function (distance) {
+    calculateScoreBasedOnDistance: function (distance) {
+        let _calculateScore = (number, textIndex) => {
+            this.score += number;
+            scoreBoard.scoreWidth += this.score;
+            this.textIndex = textIndex;
+            this.createMessage();
+            return this.score;
+        }
+
         let arrowHeight = this.arrowBoard[0].height
+        let newScore = 0
 
         switch (true) {
             case (distance < arrowHeight * 0.1):
-                this.calculateScore(5, 0);
+                newScore = _calculateScore(5, 0);
+                return this.dance = "dance";
                 break;
             case (distance < arrowHeight * 0.25):
-                this.calculateScore(2, 1)
+                newScore = _calculateScore(2, 1);
+                return this.dance = "dance";
                 break;
             case ((distance > arrowHeight * 0.25) && (distance < arrowHeight * 0.5)):
-                this.calculateScore(1, 2);
+                newScore = _calculateScore(1, 2);
+                return this.dance = "dance";
                 break;
             case (distance > arrowHeight * 0.5):
-                this.calculateScore(-5, 3);
+                newScore = _calculateScore(-5, 3);
+                return this.dance = "stop";
                 break;
         }
-    },
-
-    calculateScore: function (number, textIndex) {
-        this.score += number;
-        scoreBoard.scoreWidth += this.score;
-        this.textIndex = textIndex;
-        this.createMessage();
-        return this.score;
     },
 
     winOrLose: function () {
         // end of level
         if (scoreBoard.scoreWidth >= scoreBoard.width) {
-            this.arrows = [];
-            this.messages = [];
-            scoreBoard.scoreWidth = scoreBoard.width;
-            clearInterval(this.interval);
-            alert("Level completed");
+            this.newLevel();
         } else if (scoreBoard.scoreWidth <= 0) {
-            scoreBoard.scoreWidth = 0;
-            scoreBoard.draw();
             this.gameOver()
         }
-
-        // increment difficulty
-        // start new level
-        // this.init();
     },
+
+    newLevel: function() {
+        this.arrows = [];
+        this.messages = [];
+        scoreBoard.scoreWidth = 0;
+        scoreBoard.draw();
+        this.ctx.fillStyle = "green"
+        this.ctx.fillRect((this.width - this.background.width)/2,0, this.background.width, this.background.height)
+
+        clearInterval(this.interval);
+    },
+
 
     gameOver: function () {
         this.arrows = [];
         this.messages = [];
+        scoreBoard.scoreWidth = 0;
+        scoreBoard.draw();
+        this.ctx.fillStyle = "red"
+        this.ctx.fillRect((this.width - this.background.width)/2,0, this.background.width, this.background.height)
+
         clearInterval(this.interval);
-        alert("You suck");
     }
 
     // to be reviewed
