@@ -18,7 +18,7 @@ class Player {
         this.framesIY = 0;
     }
 
-    draw(framesCounter) {
+    draw() {
         this.ctx.drawImage(
             this.img,
             this.framesIX * Math.floor(this.img.width / this.framesX),
@@ -30,9 +30,6 @@ class Player {
             this.width,
             this.height
         );
-
-        // this.animate(framesCounter);
-        // this.dance(framesCounter)
     }
 
     animate(framesCounter) {

@@ -38,7 +38,7 @@ const animationOnLoad = {
     },
 
     reset: function () {
-        this.background = new Background(this.ctx, "img/bg-start.png", this.width, this.height);
+        this.background = new Background(this.ctx, "img/bg-start.png", this.width, this.height, 1);
     },
 
     drawAll: function () {

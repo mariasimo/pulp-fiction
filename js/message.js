@@ -6,7 +6,6 @@ class Message {
         this.width = width;
         this.height = height;
         this.alpha = 1.0;   // full opacity
-        this.index = 0;
         this.texts = [
             'Perfect',
             'Great',
@@ -24,15 +23,16 @@ class Message {
         this.ctx.fillStyle = "rgba(255, 255, 255, " + this.alpha + ")";
         this.ctx.font = '1em "Press Start 2P"'
         this.ctx.fillText(this.message, this.posX, this.posY)
+        this.posY--;
     }
 
-    fadeOut() {
-        this.interval = setInterval( () => {
-            this.alpha = this.alpha - 0.015; // decrease opacity (fade out)
-            this.posY--;
-            if (this.alpha < 0) {
-                clearInterval(this.interval)
-            }
-        }, 1000);
-    }
+    // fadeOut() {
+    //     this.interval = setInterval( () => {
+    //         this.alpha = this.alpha - 0.015; // decrease opacity (fade out)
+    //         this.posY--;
+    //         if (this.alpha < 0) {
+    //             clearInterval(this.interval)
+    //         }
+    //     }, 1000);
+    // }
 }

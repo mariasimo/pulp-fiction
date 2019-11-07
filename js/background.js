@@ -1,22 +1,46 @@
 class Background {
-    constructor(ctx, img, width, height){
+    constructor(ctx, img, width, height, framesX) {
         this.ctx = ctx;
         this.height = height;
-        this.width = this.height*16/9;
+        this.width = this.height * 16 / 9;
 
-
-        // this.width = height*16/9;
-        // this.height = 600;
-        this.image  = new Image();
-        this.image.src = img;
+        this.img = new Image();
+        this.img.src = img;
 
         this.posX = (width - this.width) / 2;
         this.posY = 0;
+
+        // Num of frames in the sprite
+        this.framesX = framesX;
+        this.framesY = 1;
+
+        // Actual position in the sprite
+        this.framesIX = 0;
+        this.framesIY = 0;
     }
 
-    draw (){
-        this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height);
+    draw(framesCounter) {
+        this.ctx.drawImage(
+            this.img,
+            this.framesIX * Math.floor(this.img.width / this.framesX),
+            this.framesIY * Math.floor(this.img.height / this.framesY),
+            Math.floor(this.img.width / this.framesX),
+            Math.floor(this.img.height / this.framesY),
+            this.posX,
+            this.posY,
+            this.width,
+            this.height
+        );
+
+        if (this.framesX > 1) {
+            this.animate(framesCounter);
+        }
     }
 
-    animate() {}
+    animate(framesCounter) {
+        if (framesCounter % 10 === 0) {
+            this.framesIX++;            
+            (this.framesIX > this.framesX) && (this.framesIX = 0);
+        }
+    }
 }
