@@ -26,13 +26,13 @@ class Message {
         this.posY--;
     }
 
-    // fadeOut() {
-    //     this.interval = setInterval( () => {
-    //         this.alpha = this.alpha - 0.015; // decrease opacity (fade out)
-    //         this.posY--;
-    //         if (this.alpha < 0) {
-    //             clearInterval(this.interval)
-    //         }
-    //     }, 1000);
-    // }
+    fadeOut() {
+        this.interval = setInterval( () => {
+            this.alpha = this.alpha - 0.015; // decrease opacity (fade out)
+            this.posY--;
+            if (this.alpha < 0) {
+                clearInterval(this.interval)
+            }
+        }, 1000);
+    }
 }

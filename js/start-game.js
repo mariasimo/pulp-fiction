@@ -24,10 +24,8 @@ const animationOnLoad = {
         this.reset();
         this.interval = setInterval(() => {
             this.framesCounter++;
-
             this.clear();
             this.drawAll();
-
 
             if (this.framesCounter > 1000) this.framesCounter = 0;
         }, 1000 / this.fps)
@@ -48,8 +46,8 @@ const animationOnLoad = {
         this.ctx.fillText("PRESS ENTER TO START", this.background.width * .5, this.background.height * .7)
     },
 
-
     setListeners: function () {
+        console.log()
         document.addEventListener('keydown', (e) => {
             if (e.keyCode) {
                 clearInterval(this.interval);

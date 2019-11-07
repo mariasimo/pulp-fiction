@@ -10,7 +10,7 @@ const scoreBoard = {
         this.height = bgHeight/32;
         this.posX = (gameWidth - bgWidth)/2 + bgWidth/20;
         this.posY = bgHeight / 16;
-        this.scoreWidth = this.width-40;
+        this.scoreWidth = this.width/2;
         this.level = level;
     },
 

@@ -3,7 +3,7 @@ const game = {
     ctx: undefined,
     width: undefined,
     height: undefined,
-    fps: 20,
+    fps: 30,
     framesCounter: 0,
     arrowCounter: 0, //Number of el in arr arrowboard
     score: 0,
@@ -42,6 +42,7 @@ const game = {
         if (!this.isKeyboardInitialized) {
             this.isKeyboardInitialized = true;
             this.setListeners(this.scoreBoard);
+            this.audio = new Sound('audio/music.mp3')
         }
     },
 
@@ -52,6 +53,7 @@ const game = {
 
             this.clear();
             this.drawAll();
+            this.audio.play()
             this.clearMessages();
 
             this.moveAll();
@@ -119,7 +121,7 @@ const game = {
 
         this.messages.forEach(message => {
             message.draw();
-            //message.fadeOut();
+            message.fadeOut();
         })
 
         scoreBoard.draw(this.score);
@@ -212,15 +214,15 @@ const game = {
 
         switch (true) {
             case (distance < arrowHeight * 0.1):
-                newScore = this._calculateScore(6, 0);
+                newScore = this._calculateScore(8, 0);
                 return this.dance = "dance";
                 break;
             case (distance < arrowHeight * 0.25):
-                newScore = this._calculateScore(3, 1);
+                newScore = this._calculateScore(5, 1);
                 return this.dance = "dance";
                 break;
             case ((distance > arrowHeight * 0.25) && (distance < arrowHeight * 0.5)):
-                newScore = this._calculateScore(1, 2);
+                newScore = this._calculateScore(2, 2);
                 return this.dance = "dance";
                 break;
             case (distance > arrowHeight * 0.5):
@@ -240,11 +242,17 @@ const game = {
     },
 
     newLevel: function () {
+        setTimeout(()=>{
+            this.audio.pause();
+        },500)
+
         this.nextLevel.draw();
         this.nextLevel.animate(this.framesCounter);
 
         this.arrows = [];
         this.messages = [];
+
+
         scoreBoard.scoreWidth = 0;
         scoreBoard.draw();
 
@@ -268,17 +276,10 @@ const game = {
                 switch (e.keyCode) {
                     case this.keys.Y_LETTER:
                         setTimeout(() => {
-                            game.clear();
+                            this.clear();
                             this.level = 0;
-                            game.init();
+                            this.init();
 
-                        }, 200)
-                        break;
-
-                    case this.keys.N_LETTER:
-                        setTimeout(() => {
-                            game.clear();
-                            animationOnLoad.init();
                         }, 200)
                         break;
                 }
@@ -296,15 +297,15 @@ const game = {
         this.ctx.fillStyle = "#e4ddd3";
         this.ctx.font = '1em "Press Start 2P"'
 
-        if (this.level > 3) {
+        if (this.level < 3) {
             this.ctx.fillText("WOW. YOU REALLY SUCK AT THIS", this.background.width * .25, this.background.height * .4)
             this.ctx.fillText("YOUR BOSS MARCELLUS WON'T BE HAPPY", this.background.width * .25, this.background.height * .45)
-            this.ctx.fillText("Wanna try again? Y/N", this.background.width * .25, this.background.height * .6)
+            this.ctx.fillText("Wanna try again? Press Y", this.background.width * .25, this.background.height * .6)
 
         } else {
             this.ctx.fillText("WELL, IT SEEMS YOU CAN'T KEEP UP WITH MIA", this.background.width * .25, this.background.height * .4)
             this.ctx.fillText("BUT THEN, WHO CAN?", this.background.width * .25, this.background.height * .45)
-            this.ctx.fillText("Wanna try again? Y/N", this.background.width * .25, this.background.height * .6)
+            this.ctx.fillText("Wanna try again? Press Y", this.background.width * .25, this.background.height * .6)
         }
 
         _listenTryAgain();
