@@ -301,7 +301,7 @@ const game = {
         this.ctx.fillRect(0, 0, this.width, this.height)
 
         this.ctx.fillStyle = "#e4ddd3";
-        this.ctx.font = '1em "Press Start 2P"'
+        this.ctx.font = '1.25em "Press Start 2P"'
 
         if (this.level < 3) {
             this.ctx.fillText("WOW. YOU REALLY SUCK AT THIS", this.background.width * .25, this.background.height * .4)
