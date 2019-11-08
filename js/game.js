@@ -21,7 +21,7 @@ const game = {
     textIndex: 0,
     level: 0,
     increaseDifficulty: 1,
-    isKeyboardInitialized : false,
+    isKeyboardInitialized: false,
 
     randomInt: function (min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -30,8 +30,8 @@ const game = {
     init: function () {
         this.canvas = document.querySelector('#game-canvas');
         this.ctx = this.canvas.getContext('2d');
-        this.width = window.innerWidth * 0.75
-        this.height = window.innerHeight * 0.75;
+        this.width = window.innerWidth * 0.85;
+        this.height = window.innerHeight * 0.85;
         this.canvas.width = this.width;
         this.canvas.height = this.height;
         this.arrowCounter = 0;
@@ -42,7 +42,8 @@ const game = {
         if (!this.isKeyboardInitialized) {
             this.isKeyboardInitialized = true;
             this.setListeners(this.scoreBoard);
-            this.audio = new Sound('audio/music.mp3')
+            this.audio = new Sound('audio/music.mp3');
+            this.nextLevelAudio = new Sound("audio/next-level.wav")
         }
     },
 
@@ -74,7 +75,7 @@ const game = {
 
     // order matters
     reset: function () {
-        this.background = new Background(this.ctx, "img/bg-1.png", this.width, this.height, 1);
+        this.background = new Background(this.ctx, "img/bg-sprite.png", this.width, this.height, 4);
         this.nextLevel = new Background(this.ctx, "img/next-level.png", this.width, this.height, 2);
 
         // arrow board
@@ -113,7 +114,7 @@ const game = {
         this.arrowBoard.forEach(arrow => {
             arrow.draw()
         });
-        
+
         //for each arrow, call draw method
         this.arrows.forEach(arrow => {
             arrow.draw()
@@ -125,9 +126,11 @@ const game = {
         })
 
         scoreBoard.draw(this.score);
+
     },
 
     moveAll: function () {
+        this.background.animate(this.framesCounter);
         this.arrows.forEach(arrow => {
             arrow.move()
         });
@@ -136,7 +139,9 @@ const game = {
         this.mia.dance(this.framesCounter)
 
         if (this.dance === "dance") {
+
             this.vincent.dance(this.framesCounter);
+            
 
         } else {
 
@@ -161,7 +166,7 @@ const game = {
         this.messages = this.messages.filter(message => message.posY > 0);
     },
 
-    setListeners: function() {
+    setListeners: function () {
         document.addEventListener('keyup', (e) => {
             switch (e.keyCode) {
                 case this.keys.TOP_KEY:
@@ -192,7 +197,7 @@ const game = {
         })
     },
 
-    _calculateScore : function (number, textIndex) {
+    _calculateScore: function (number, textIndex) {
         this.createMessage();
         this.score = number - this.increaseDifficulty;
 
@@ -242,9 +247,10 @@ const game = {
     },
 
     newLevel: function () {
-        setTimeout(()=>{
+        setTimeout(() => {
             this.audio.pause();
-        },500)
+            this.nextLevelAudio.play();
+        }, 500)
 
         this.nextLevel.draw();
         this.nextLevel.animate(this.framesCounter);

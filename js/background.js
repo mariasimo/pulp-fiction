@@ -40,7 +40,7 @@ class Background {
     animate(framesCounter) {
         if (framesCounter % 10 === 0) {
             this.framesIX++;            
-            (this.framesIX > this.framesX) && (this.framesIX = 0);
+            (this.framesIX >= this.framesX) && (this.framesIX = 0);
         }
     }
 }
