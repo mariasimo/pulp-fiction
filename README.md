@@ -1,4 +1,4 @@
-<p style="text-align:center"><img src="/Users/mariasimo/Ironhack/week-3/pulp fiction materiales/title.png" alt="Pulp Fiction" style="zoom:35%;" /></p>
+<p style="text-align:center"><img src="screenshots/title.png" alt="Pulp Fiction" style="zoom:35%;" /></p>
 
 <h2 align="center">
   A little fan fiction game 
@@ -8,7 +8,7 @@
 
 ## About The Project
 
-<video src="/Users/mariasimo/Desktop/Grabación de pantalla 2019-11-18 a las 0.01.19.mov"></video>
+<video src="screenshots/Grabación de pantalla 2019-11-18 a las 0.01.19.mov"></video>
 
 Pulp fiction — A little fan fiction game is the first proyect I made at my [Ironhack](https://www.ironhack.com/) Full Stack Web Dev Bootcamp. After three weeks learning the fundamentals of front end, we had a monday to friday week to develop a game of our choice. 
 
@@ -18,7 +18,7 @@ Pulp fiction — A little fan fiction game is the first proyect I made at my [Ir
 
  This project is built upon canvas, lots of javascript and a little of css. I also made the graphics myself with [Pyxel Edit](https://pyxeledit.com/)
 
-![mia-idle](/Users/mariasimo/Ironhack/week-3/pulp fiction materiales/mia-idle.png)
+![mia-idle](screenshots/mia-idle.png)
 
 
 
@@ -58,3 +58,7 @@ To teammates and to the IronHack Team for their support!
 María Simó - [@coponstudio](https://instagram.com/coponstudio) - [maria@coponstudio.es](maria@coponstudio.es)
 
 Project Link: [https://github.com/mariasimo/pulp-fiction
+
+
+
+![vincent-waiting](/Users/mariasimo/Ironhack/week-3/pulp-fiction/screenshots/vincent-waiting.gif)
