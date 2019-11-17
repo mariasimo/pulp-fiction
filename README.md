@@ -18,7 +18,7 @@ Pulp fiction — A little fan fiction game is the first proyect I made at my [Ir
 
  This project is built upon canvas, lots of javascript and a little of css. I also made the graphics myself with [Pyxel Edit](https://pyxeledit.com/)
 
-![mia-idle](screenshots/mia-idle.png)
+![](screenshots/mia-idle.png?raw=true)
 
 
 
