@@ -8,7 +8,7 @@
 
 ## About The Project
 
-<video src="https://mariasimo.github.io/pulp-fiction/screenshots/Grabación de pantalla 2019-11-18 a las 0.01.19.mov"></video>
+![](https://media.giphy.com/media/UQruK5Wy86OWO8ssT1/giphy.gif)
 
 Pulp fiction — A little fan fiction game is the first proyect I made at my [Ironhack](https://www.ironhack.com/) Full Stack Web Dev Bootcamp. After three weeks learning the fundamentals of front end, we had a monday to friday week to develop a game of our choice. 
 
@@ -26,6 +26,7 @@ Pulp fiction — A little fan fiction game is the first proyect I made at my [Ir
 
 ## Getting Started ⌨️
 
+Use the keyboard arrows on time to make Vincent dance with Mia. She's going to dance faster every time. Try to keep with her! 
 Let's play: https://mariasimo.github.io/pulp-fiction/
 
 ### Installation
@@ -60,6 +61,8 @@ To teammates and to the IronHack Team for their support!
 María Simó - [@coponstudio](https://instagram.com/coponstudio) - [maria@coponstudio.es](maria@coponstudio.es)
 
 Project Link: [https://github.com/mariasimo/pulp-fiction
+
+
 
 
 <p align="center"><img src="https://mariasimo.github.io/pulp-fiction/screenshots/vincent-waiting.gif" alt="Pulp Fiction" width="200"/></p>
