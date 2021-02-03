@@ -10,7 +10,7 @@
 
 ![](https://media.giphy.com/media/UQruK5Wy86OWO8ssT1/giphy.gif)
 
-Pulp fiction — A little fan fiction game is the first proyect I made at my [Ironhack](https://www.ironhack.com/) Full Stack Web Dev Bootcamp. After three weeks learning the fundamentals of front end, we had a monday to friday week to develop a game of our choice. 
+Pulp fiction — A little fan fiction game is the first project I made at my [Ironhack](https://www.ironhack.com/) Full Stack Web Dev Bootcamp. After three weeks learning the fundamentals of front end, we had a monday to friday week to develop a game of our choice. 
 
 
 
